@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ComputerControl:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ComputerControl-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ComputerControl:war exploded" />
+    </root>
+  </artifact>
+</component>
