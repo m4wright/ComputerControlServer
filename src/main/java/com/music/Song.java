@@ -4,8 +4,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,16 +47,21 @@ public class Song
         }
     }
 
-    public InputStream getSongFile() {
+    public FileInputStream getSongFile() {
         try
         {
             return new FileInputStream(songFile);
         }
-        catch (FileNotFoundException e)
+        catch (IOException e)
         {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String getSongPath()
+    {
+        return songFile.getAbsolutePath();
     }
 
 

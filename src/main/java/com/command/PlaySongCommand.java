@@ -3,7 +3,7 @@ package com.command;
 import com.computer.control.ControlServlet;
 import com.google.gson.Gson;
 import com.music.Artist;
-import com.music.MediaPlayer;
+import com.music.MusicPlayer;
 import com.music.Song;
 
 import java.util.Map;
@@ -15,7 +15,7 @@ public class PlaySongCommand implements Command
     private static final String SONG_NAME = "song_name";
     private static final PlaySongCommand PlaySongCommandInstance = new PlaySongCommand();
 
-    private static final MediaPlayer mediaPlayer = MediaPlayer.instance();
+    private static final MusicPlayer MUSIC_PLAYER = MusicPlayer.instance();
 
     static PlaySongCommand instance() { return PlaySongCommandInstance; }
     private PlaySongCommand() { /* Intentionally empty */ }
@@ -29,7 +29,7 @@ public class PlaySongCommand implements Command
         Artist artist = ControlServlet.getArtist(artist_name);
         Song song = artist.getSong(song_name);
 
-        mediaPlayer.play(song);
+        MUSIC_PLAYER.play(song);
 
 
         return new Gson().toJson("Playing " + artist.getSong(song_name));
