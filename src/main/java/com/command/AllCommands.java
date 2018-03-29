@@ -17,7 +17,8 @@ public class AllCommands
         PlaySongCommand.instance(),
         PauseSongCommand.instance(),
         ResumeSongCommand.instance(),
-        TogglePlayCommand.instance()
+        TogglePlayCommand.instance(),
+        RegisterCommand.instance()
     );
 
     private AllCommands() { /* Intentionally empty */ }

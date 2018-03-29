@@ -5,6 +5,8 @@ import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -59,9 +61,9 @@ public class Song
         }
     }
 
-    public String getSongPath()
+    public URI getSongURI()
     {
-        return songFile.getAbsolutePath();
+        return Paths.get(songFile.getAbsolutePath()).toUri();
     }
 
 

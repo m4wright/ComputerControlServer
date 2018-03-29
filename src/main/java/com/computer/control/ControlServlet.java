@@ -133,6 +133,7 @@ public class ControlServlet extends HttpServlet
             String artist = pRequest.getParameter("artist");
             String song_name = pRequest.getParameter("song_name");
             System.out.printf("Artist = %s, song = %s\n", artist, song_name);
+            pResponse.setContentType("audio/mp");
             try
             {
                 InputStream songStream = artists.get(artist).getSong(song_name).getSongFile();
@@ -173,10 +174,15 @@ public class ControlServlet extends HttpServlet
         }
 
 
+
         Map<String, String> parameters = getParameterMap(pRequest.getParameterMap());
 
         if (aCommands.containsKey(commandType))
         {
+            if ("register".equals(commandType))
+            {
+                parameters.put("address", pRequest.getRemoteAddr());
+            }
             try
             {
                 String outputString = aCommands.get(commandType).execute(parameters);

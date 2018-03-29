@@ -1,5 +1,6 @@
 package com.music;
 
+import com.notifier.Controller;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -7,7 +8,6 @@ import javazoom.jl.decoder.JavaLayerException;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 public class MusicPlayer
 {
@@ -45,14 +45,21 @@ public class MusicPlayer
 
     private void play(String songPath) throws LineUnavailableException, IOException
     {
+        if (currentlyPlaying())
+        {
+            player.stop();
+        }
         player = new MediaPlayer(new Media(songPath));
-
+        player.setOnEndOfMedia(() -> {
+            System.out.println("Done song!");
+            Controller.instance().notifyListeners("done_song");
+        });
         player.play();
     }
 
     public void play(Song song) throws IOException, LineUnavailableException
     {
-        play(Paths.get(song.getSongPath()).toUri().toString());
+        play(song.getSongURI().toString());
     }
 
     public void resume()
