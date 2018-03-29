@@ -27,7 +27,7 @@ public class ControlServlet extends HttpServlet
 
     private static final Map<String, Command> aCommands = new HashMap<>();
     private static final String CHARACTER_ENCODING = "UTF-8";
-    private static final String CONTENT_TYPE = "application/json";
+    private static final String CONTENT_TYPE = "application/json; charset=UTF-8";
 
     private static final Map<String, Artist> artists = new HashMap<>();
     private static final String MUSIC_DIRECTORY = "/home/mathew/Music";
