@@ -21,8 +21,7 @@ public class MusicPlayer
     public static MusicPlayer instance() { return MUSIC_PLAYER; }
 
 
-
-    private MediaPlayer player;
+    private volatile MediaPlayer player;
 
 
 
@@ -43,10 +42,9 @@ public class MusicPlayer
         }
     }
 
-    private void play(String songPath) throws LineUnavailableException, IOException
+    private synchronized void play(String songPath) throws LineUnavailableException, IOException
     {
-        if (currentlyPlaying())
-        {
+        if (player != null) {
             player.stop();
         }
         player = new MediaPlayer(new Media(songPath));
