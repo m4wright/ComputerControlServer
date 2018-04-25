@@ -1,12 +1,11 @@
 package com.command;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class AllCommands
 {
-    private static final List<Command> COMMANDS = Arrays.asList(
+    private static final List<Command> COMMANDS = List.of(
         GetVolumeCommand.instance(),
         SetVolumeCommand.instance(),
         ShutdownCommand.instance(),

@@ -8,10 +8,14 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class NetworkStateListener implements StateListener
 {
     private final String endpoint;
+    private static final long timeoutInMS = 1000;
 
     public NetworkStateListener(String endpoint)
     {
@@ -22,18 +26,31 @@ public class NetworkStateListener implements StateListener
     @Override
     public void notifyListener(String message)
     {
-        CompletableFuture.runAsync(() -> {
-            try {
-                URIBuilder builder = new URIBuilder(endpoint);
-                builder.setParameter("message", message);
-                HttpGet request = new HttpGet(builder.build());
-                HttpClient client = HttpClientBuilder.create().build();
-                client.execute(request);
-            } catch (IOException | URISyntaxException e) {
-                e.printStackTrace();
-                // TODO: unregister from controller
-            }
-        });
+        try
+        {
+            CompletableFuture.runAsync(() -> {
+                try
+                {
+                    URIBuilder builder = new URIBuilder(endpoint);
+                    builder.setParameter("message", message);
+                    HttpGet request = new HttpGet(builder.build());
+                    HttpClient client = HttpClientBuilder.create().build();
+                    client.execute(request);
+                }
+                catch (IOException | URISyntaxException e)
+                {
+                    Controller.instance().removeListener(this);
+                }
+            }).get(timeoutInMS, TimeUnit.MILLISECONDS);
+        }
+        catch (InterruptedException | ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+        catch (TimeoutException e)
+        {
+            Controller.instance().removeListener(this);
+        }
     }
 
     @Override
@@ -55,5 +72,11 @@ public class NetworkStateListener implements StateListener
     @Override
     public int hashCode() {
         return endpoint.hashCode();
+    }
+
+    @Override
+    public String toString()
+    {
+        return endpoint;
     }
 }

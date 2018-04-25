@@ -9,8 +9,8 @@
         <module name="ComputerControl" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ComputerControl" target="1.8" />
+    <bytecodeTargetLevel target="9">
+      <module name="ComputerControl" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>

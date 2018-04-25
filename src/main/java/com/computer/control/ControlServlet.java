@@ -68,7 +68,7 @@ public class ControlServlet extends HttpServlet
                     try
                     {
                         artist.addSong(file, songName);
-                        System.out.println("Adding " + artist.getSong(songName));
+                        System.out.println("Adding " + artist.getSong(songName) + " located at " + artist.getSong(songName).getSongURI());
                     }
                     catch (Exception ignored) {}
                 }
@@ -133,7 +133,7 @@ public class ControlServlet extends HttpServlet
             String artist = pRequest.getParameter("artist");
             String song_name = pRequest.getParameter("song_name");
             System.out.printf("Artist = %s, song = %s\n", artist, song_name);
-            pResponse.setContentType("audio/mp");
+            pResponse.setContentType("audio/mpeg");
             try
             {
                 InputStream songStream = artists.get(artist).getSong(song_name).getSongFile();
@@ -142,6 +142,8 @@ public class ControlServlet extends HttpServlet
             }
             catch (Exception e)
             {
+                System.err.println("Error getting song");
+                e.printStackTrace();
                 pResponse.sendError(400, "Missing or invalid song name or artist");
                 return;
             }

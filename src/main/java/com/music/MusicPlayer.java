@@ -52,6 +52,10 @@ public class MusicPlayer
             System.out.println("Done song!");
             Controller.instance().notifyListeners("done_song");
         });
+        player.setOnError(() -> {
+            System.out.println("Error playing song :(");
+            player.getError().printStackTrace();
+        });
         player.play();
     }
 

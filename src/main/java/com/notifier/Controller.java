@@ -16,6 +16,12 @@ public class Controller
         listeners.put(listener.getLocation(), listener);
     }
 
+    void removeListener(StateListener listener)
+    {
+        System.out.println("Removing listener for " + listener);
+        listeners.remove(listener.getLocation());
+    }
+
     public void notifyListeners(String message)
     {
         listeners.values().forEach(listener -> listener.notifyListener(message));
